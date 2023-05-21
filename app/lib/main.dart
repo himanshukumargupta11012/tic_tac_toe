@@ -210,7 +210,7 @@ class _CustomBtnState extends State<CustomBtn> {
     widget.onPressed();
 
     String url =
-        "http://192.168.175.235:5000/api?array=${turnArr}&curr_turn=${widget.keyValue}&curr_node=${currNode}";
+        "https://tic-tac-toe-api-rgwe.onrender.com/api?array=${turnArr}&curr_turn=${widget.keyValue}&curr_node=${currNode}";
     var output = jsonDecode(await fetchData(url));
 
     setState(() {
