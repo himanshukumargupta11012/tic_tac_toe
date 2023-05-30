@@ -1,11 +1,9 @@
 from flask import Flask, request
 import numpy as np
+import time
 import copy
-import sys
 
 app = Flask(__name__)
-
-
 
 dict = {
     0 : 1,
@@ -81,7 +79,7 @@ def treeMaking(curr_node, board, height, position):
             curr_node.value = max([i.value for i in curr_node.child])
 
 treeMaking(root, board.copy(), 0, 100)
-# print(nodeInstance)
+
 curr_node = root
 
 @app.route('/api', methods=['GET'])
@@ -99,6 +97,15 @@ def api():
         if i.position == human_input:
             curr_node = i
 
+    # ---------- checking game ends or not -------------
+    if len(curr_node.child) == 0:
+        if curr_node.value == 0:
+            d['winner'] = 0
+        
+        if curr_node.value == -1:
+            d['winner'] = 2
+        return d
+
     # ----------- bot turn -----------
 
     bot_input = curr_node.child[curr_node.perfect_child].position
@@ -106,8 +113,13 @@ def api():
 
     curr_node = curr_node.child[np.argmax([i.value for i in curr_node.child])]
     array[bot_index] = str(1)
+
+        # ---------- checking game ends or not -------------
+    if len(curr_node.child) == 0:
+        if curr_node.value == 1:
+            d['winner'] = 1
+
     array_str = "".join(array)
-    print(curr_node.key, array_str)
     d['curr_node'] = curr_node.key
     d['array_str'] = array_str
 

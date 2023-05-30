@@ -1,2 +1,3 @@
-# tic_tac_toe
-A Tic Tac Toe playing bot
+# tic-tac-toe
+
+A bot who would like to play tic-tac-toe with you.
